@@ -119,6 +119,9 @@ do_cmd()
         /sbin/zfs jail ${ezjail_id} ${zfs} || echo -n "Error: ${zfs} could not be configured"
       done
 
+      # Mount any datasets that have become available in the jail
+      /usr/sbin/jexec ${ezjail_id} /sbin/zfs mount -a
+
       # Configure processor sets for the jail via cpuset(1)
       [ -z "${ezjail_cpuset}" ] || /usr/bin/cpuset -l ${ezjail_cpuset} -j ${ezjail_id} || echo -n "Error: The defined cpuset is malformed"
 

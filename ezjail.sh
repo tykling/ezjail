@@ -116,6 +116,7 @@ do_cmd()
 
       # Attach ZFS-datasets to the jail
       for zfs in ${ezjail_zfs_datasets}; do
+        /sbin/zfs set jailed=on {zfs} || echo -n "Error: ${zfs} could not be configured"
         /sbin/zfs jail ${ezjail_id} ${zfs} || echo -n "Error: ${zfs} could not be configured"
       done
 
